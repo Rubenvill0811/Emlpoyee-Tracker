@@ -1,5 +1,6 @@
 const {prompt} = require('inquirer');
 const db = require('./db');
+const { response } = require('express');
 
 appStart();
 
@@ -18,7 +19,7 @@ function inquire() {
             choices: [
                 {
                     name: 'Select all employees',
-                    value: 'SELECT_EMPLOYEES'
+                    value: 'SELECT_ALL_EMPLOYEES'
                 },
                 {
                     name: 'Select employees by department',
@@ -45,12 +46,12 @@ function inquire() {
                     value: 'UPDATE_MANAGER'
                 },
                 {
-                    name: 'Select all roles',
-                    value: 'SELECT_ALL_ROLES'
+                    name: 'Select all jobs',
+                    value: 'SELECT_ALL_JOBS'
                 },
                 {
-                    name: 'Create role',
-                    value: 'CREATE_ROLE'
+                    name: 'Create job',
+                    value: 'CREATE_JOB'
                 },
                 {
                     name: 'Select all departments',
@@ -74,11 +75,109 @@ function inquire() {
                 }
             ]
         }
-    ]).then()
+    ]).then(res => {
+        let choice = res.choice;
 
+        switch (choice) {
+            case 'SELECT_ALL_EMPLOYEES':
+                selectAllEmployees();
+                break;
+            case 'SELECT_EMPLOYEES_BY_DEPARTMENT':
+                selectEmployeesByDept();
+                break;
+            case 'SELECT_EMPLOYEES_BY_MANAGER':
+                selectEmployeesByManager();
+                break;
+            case 'CREATE_EMPLOYEE':
+                createEmployee();
+                break;
+            case 'DELETE_EMPLOYEE':
+                deleteEmployee();
+                break;
+            case 'UPDATE_EMPLOYEE_JOB':
+                updateEmployeeJob();
+                break;
+            case 'UPDATE_MANAGER':
+                updateManager();
+                break;
+            case 'SELECT_ALL_JOBS':
+                selectAllJobs();
+                break;
+            case 'CREATE_JOB':
+                createJob();
+                break;
+            case 'SELECT_ALL_DEPARTMENTS':
+                selectAllDepts();
+                break;
+            case 'CREATE_DEPARTMENT':
+                createDept();
+                break;
+            case 'DELETE_DEPARTMENT':
+                deleteDept();
+                break;
+            case 'SELECT_DEPARTMENT_BUDGET':
+                selectDeptBudget();
+                break;
+            case 'TERMINATE_APP':
+                terminateApp();
+                break;
+             
+        }
+    })
+}
 
+function selectAllEmployees() {
 
+}
 
+function selectEmployeesByDept() {
 
+}
 
+function selectEmployeesByManager() {
+
+}
+
+function createEmployee() {
+
+}
+
+function deleteEmployee() {
+
+}
+
+function updateEmployeeJob() {
+
+}
+
+function updateManager() {
+
+}
+
+function selectAllJobs(){
+
+}
+
+function createJob() {
+
+}
+
+function selectAllDepts() {
+
+}
+
+function createDept() {
+
+}
+
+function deleteDept() {
+
+}
+
+function selectDeptBudget() {
+
+}
+
+function terminateApp() {
+    
 }
