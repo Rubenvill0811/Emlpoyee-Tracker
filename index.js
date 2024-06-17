@@ -150,10 +150,6 @@ function updateEmployeeJob() {
 
 }
 
-function updateManager() {
-
-}
-
 function selectAllJobs(){
 
 }
@@ -174,10 +170,6 @@ function deleteDept() {
 
 }
 
-function selectDeptBudget() {
-
-}
-
 function terminateApp() {
-    
+
 }
