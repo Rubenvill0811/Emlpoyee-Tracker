@@ -12,7 +12,6 @@ This app allows the managers to acess a database of their employees in detail.
 
 - Installation
 - Dependancies
-- Usage
 - Contribution
 - Tests
 - Contact me
@@ -32,6 +31,10 @@ N/A
 ## Tests
 
 N/A
+
+## Link to the submission video
+
+https://drive.google.com/file/d/1y3ioMShCXLX4YDIjVI6dN4HIxZFUwdg9/view?usp=sharing
 
 # Contact Me
 
