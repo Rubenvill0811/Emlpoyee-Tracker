@@ -66,10 +66,6 @@ function inquire() {
                     value: 'DELETE_DEPARTMENT'
                 },
                 {
-                    name: 'Select department budget',
-                    value: 'SELECT_DEPARTMENT_BUDGET'
-                },
-                {
                     name: 'Goodbye',
                     value: 'TERMINATE_APP'
                 }
@@ -127,20 +123,139 @@ function inquire() {
 }
 
 function selectAllEmployees() {
-
+    db.findEmployees()
+    .then(([tableRow]) => {
+        let employee = tableRow;
+        console.log('\n');
+        console.table(employee);
+    })
+     .then(() => inquire());
 }
 
 function selectEmployeesByDept() {
+    db.allDepts().then(([tableRow]) => {
+        let dept = tableRow;
+        const deptChoices = dept.map(({id, name}) => ({
+            name: name,
+            value:id
+        }));
 
+        prompt([
+            {
+                type: 'list',
+                name: 'deptId',
+                message: 'what department would you like to see?',
+                choices: deptChoices
+            }
+        ])
+         .then(res => db.employeesByDept(res.deptId))
+         .then(([tableRow]) => {
+            let employees = tableRow;
+            console.log('\n');
+            console.table(employees);
+         })
+         .then(() => inquire());
+    });
 }
 
 function selectEmployeesByManager() {
-
-}
+    db.findEmployees()
+      .then(([tablerows]) => {
+        let manager = tablerows;
+        const managerChoices = manager.map(({ id, first_name, last_name }) => ({
+          name: `${first_name} ${last_name}`,
+          value: id
+        }));
+  
+        prompt([
+          {
+            type: "list",
+            name: "managerId",
+            message: "Whose employees would you like to see?",
+            choices: managerChoices
+          }
+        ])
+          .then(res => db.describeDeptByManager(res.managerId))
+          .then(([tableRow]) => {
+            let employees = tableRow;
+            console.log("\n");
+            if (employees.length === 0) {
+              console.log("This employee does not have a manager.");
+            } else {
+              console.table(employees);
+            }
+          })
+          .then(() => inquire())
+      });
+  }
 
 function createEmployee() {
+prompt([
+    {
+        name: 'first_name',
+        message: `Enter employee's first name.`
+    },
+    {
+        name: 'last_name',
+        message: `Enter employee's last name.`
+    }
+])
+    .then(res => {
+        let firstName = res.first_name;
+        let lastName = res.last_name;
 
+        db.allJobs()
+        .then(([tableRow]) => {
+            let job = tableRow;
+            const jobChoice = job.map(({id, title}) => ({
+                name: title,
+                value: id
+            }));
+            prompt({
+                type: 'list',
+                name: 'jobId',
+                message: "What is the employee's job?",
+                choices: jobChoice
+            })
+            .then(res => {
+                let jobId = res.jobId;
+                db.findEmployees()
+                .then(([tableRow]) => {
+                    let employee = tableRow;
+                    const managerChoice = employee.map(({id, firstName, lastname}) => ({
+                        name: `${firstName} ${lastname}`,
+                        value: id
+                    }));
+
+                    managerChoice.unshift({name: 'none', value: null});
+
+                    prompt({
+                        type: "list",
+                        name: "managerId",
+                        message: "Who is the employee's manager?",
+                        choices: managerChoice
+                      })
+                      .then(res => {
+                        let employee = {
+                            manager_id: res.managerId,
+                            job_id: jobId,
+                            first_name: firstName,
+                            last_name: lastName
+                        }
+
+                        db.newEmployee(employee)
+                      })
+                      .then(() => console.log(
+                        `Employee ${firstName} ${lastName} has been created.`
+                      ))
+                      .then(() => inquire())
+                })
+            })
+        })
+    })
 }
+
+
 
 function deleteEmployee() {
 

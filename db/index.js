@@ -11,6 +11,12 @@ findEmployees() {
     );
 }
 
+employeesByDept(deptId) {
+    return this.connection.promise().query(
+        `SELECT employee.id, employee.first_name, employee.last_name, role.title FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department department on role.department_id = department.id WHERE department.id = ?;`, deptId
+    );
+}
+
 findManagers(managerId) {
 return this.connection.promise().query(
     `SELECT id, first_name, last_name FROM employee WHERE id != ?`, managerId
@@ -77,5 +83,12 @@ return this.connection.promise().query(
 );
 }
 
+describeDeptByManager(manager) {
+    return this.connection.promise().query(
+        `SELECT employee.id, employee.first_name, employee.last_name, department.name AS department, role.title FROM employee LEFT JOIN role on role.id = employee.role_id LEFT JOIN department ON department.id = role.department_id WHERE manager_id = ?;`, manager
+    );
 }
 
+}
+
+module.exports = new DB(connection);
