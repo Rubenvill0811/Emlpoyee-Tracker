@@ -49,3 +49,9 @@ https://drive.google.com/file/d/1y3ioMShCXLX4YDIjVI6dN4HIxZFUwdg9/view?usp=shari
 ### Find me on LinkedIn
 
 ![Static Badge](https://img.shields.io/badge/LinkedIn-rubenvill0811-white?style=for-the-badge&logo=LinkedIn)
+
+### Sources
+
+- Tutor
+- Stack overflow
+- google
